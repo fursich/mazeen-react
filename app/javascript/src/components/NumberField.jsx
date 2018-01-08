@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import styles from '../../styles/main/cell'
 
 export default class NumberField extends React.Component {
   constructor(props) {
@@ -28,7 +29,9 @@ export default class NumberField extends React.Component {
     return(
       <form>
         <input type="number" value={value} onChange={this.handleNumberChange}/>
-        {this.state.warning}
+        <div className={styles.warning} >
+          {this.state.warning}
+        </div>
       </form>
     )
   }

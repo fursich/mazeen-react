@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Cell from './Cell'
+import styles from '../../styles/main/cell'
 
 export default class Maze extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class Maze extends React.Component {
 
   render() {
     return(
-      <table>
+      <table className={styles.table}>
         <CellTable
           row={this.props.row}
           col={this.props.col}
@@ -42,19 +43,19 @@ function flipCell(maze, row, col) {
     maze[row] = new Array();
   }
 
-  switch (maze[row][col] || '□') {
-    case '■':
-      maze[row][col] = '□';
+  switch (maze[row][col] || 'space') {
+    case 'block':
+      maze[row][col] = 'space';
       break;
-    case '□':
-      maze[row][col] = '■';
+    case 'space':
+      maze[row][col] = 'block';
       break;
   }
 
   return(maze);
 }
 
-const INITIAL_MAZE = [[null, null, '■'],['■', null, '■']]
+const INITIAL_MAZE = [[null, null, 'block'],['block', null, 'block']]
 
 function CellTable(props) {
   let list = [];
