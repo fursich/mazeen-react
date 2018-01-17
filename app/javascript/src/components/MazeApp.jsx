@@ -63,9 +63,9 @@ export default class MazeApp extends React.Component {
 
   handleSolveMazeSuccess(data) {
     console.log(data.maze);
-    this.setState({
-      maze: data.maze
-    })
+    // this.setState({
+    //   maze: data.maze
+    // })
   }
 
   handleSolveMazeFailure(message) {
