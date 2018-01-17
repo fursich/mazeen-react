@@ -6,20 +6,11 @@ import styles from '../../styles/main/cell'
 export default class Maze extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      maze: INITIAL_MAZE
-    }
     this.handleCellClick = this.handleCellClick.bind(this);
   }
 
   handleCellClick(position) {
-    let maze = this.state.maze;
-    const row = position[0];
-    const col = position[1];
-
-    this.setState({
-      maze: flipCell(maze, row, col)
-    })
+    this.props.onCellClick(position);
   }
 
   render() {
@@ -28,7 +19,7 @@ export default class Maze extends React.Component {
         <CellTable
           row={this.props.row}
           col={this.props.col}
-          maze={this.state.maze}
+          maze={this.props.maze}
           start={[0,0]}
           goal={[this.props.row-1, this.props.col-1]}
           onCellClick={this.handleCellClick}
@@ -37,25 +28,6 @@ export default class Maze extends React.Component {
     )
   }
 }
-
-function flipCell(maze, row, col) {
-  if (!maze[row]) {
-    maze[row] = new Array();
-  }
-
-  switch (maze[row][col] || 'space') {
-    case 'block':
-      maze[row][col] = 'space';
-      break;
-    case 'space':
-      maze[row][col] = 'block';
-      break;
-  }
-
-  return(maze);
-}
-
-const INITIAL_MAZE = [[null, null, 'block'],['block', null, 'block']]
 
 function CellTable(props) {
   let list = [];
