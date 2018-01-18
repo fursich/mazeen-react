@@ -11,11 +11,14 @@ export default class MazeApp extends React.Component {
     this.state = {
       width: null,
       height: null,
-      maze:   []
+      maze:   [],
+      locked: false,
+      path:   []
     }
     this.handleWidthChange  = this.handleWidthChange.bind(this)
     this.handleHeightChange = this.handleHeightChange.bind(this)
     this.handleCellClick    = this.handleCellClick.bind(this);
+    this.handleTableClick    = this.handleTableClick.bind(this);
     this.handleSolveButtonClick  = this.handleSolveButtonClick.bind(this);
     this.handleRedrawButtonClick  = this.handleRedrawButtonClick.bind(this);
     this.handleFetchInitialMazeSuccess = this.handleFetchInitialMazeSuccess.bind(this)
@@ -36,7 +39,7 @@ export default class MazeApp extends React.Component {
     solveMaze({
       height: this.state.height,
       width:  this.state.width,
-      maze:   this.state.maze
+      maze:   formatMazeData(this.state.maze, this.state.height, this.state.width)
     }).then(
       this.handleSolveMazeSuccess,
       this.handleSolveMazeFailure
@@ -45,11 +48,14 @@ export default class MazeApp extends React.Component {
   }
 
   redraw() {
+    this.setState({
+      locked: false,
+      path: []
+    })
     fetchDefaultMaze().then(this.handleFetchInitialMazeSuccess, this.handleFetchInitialMazeFailure)
   }
 
   handleFetchInitialMazeSuccess(data) {
-    console.log(data.maze);
     this.setState({
       width:  this.state.width  || data.width,
       height: this.state.height || data.height,
@@ -62,10 +68,14 @@ export default class MazeApp extends React.Component {
   }
 
   handleSolveMazeSuccess(data) {
-    console.log(data.maze);
-    // this.setState({
-    //   maze: data.maze
-    // })
+    if (data.maze) {
+      this.setState({
+        locked: true,
+        path: data.maze
+      })
+    } else {
+      // flushError();
+    }
   }
 
   handleSolveMazeFailure(message) {
@@ -74,13 +84,17 @@ export default class MazeApp extends React.Component {
 
   handleHeightChange(height) {
     this.setState( {
-      height: height
+      height: height,
+      locked: false,
+      path:   [],
     } )
   }
 
   handleWidthChange(width) {
     this.setState( {
-      width: width
+      width: width,
+      locked: false,
+      path:   [],
     } )
   }
 
@@ -89,9 +103,22 @@ export default class MazeApp extends React.Component {
     const row = position[0];
     const col = position[1];
 
-    this.setState({
-      maze: flipCell(maze, row, col)
-    })
+    // if (!this.state.locked) {
+      this.setState({
+        maze: flipCell(maze, row, col)
+      })
+    // }
+  }
+
+  handleTableClick(event) {
+    console.log('table clicked');
+    if (this.state.locked) {
+      this.setState( {
+        locked: false,
+        path:   []
+      } )
+      event.stopPropagation();
+    }
   }
 
   render() {
@@ -108,6 +135,8 @@ export default class MazeApp extends React.Component {
           row={this.state.height}
           col={this.state.width}
           onCellClick={this.handleCellClick}
+          onTableClick={this.handleTableClick}
+          path={this.state.path}
         />
         <ButtonPanel
           onSolveButtonClick={this.handleSolveButtonClick}
@@ -133,4 +162,15 @@ function flipCell(maze, row, col) {
   }
 
   return(maze);
+}
+
+function formatMazeData(maze, height, width) {
+  let formattedMaze = new Array();
+  for(let row=0; row<height; row++) {
+    formattedMaze[row] = new Array();
+    for(let col=0; col<width; col++) {
+      formattedMaze[row][col] = (maze[row] && maze[row][col] === 'block') ? 'block' : 'space'
+    }
+  }
+  return(formattedMaze)
 }

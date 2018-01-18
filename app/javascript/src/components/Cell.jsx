@@ -14,18 +14,20 @@ export default class Cell extends React.Component {
   }
 
   render() {
-    const cell = styleByCellType(this.props.cellType, this.props.isStart, this.props.isGoal)
+    const cell = styleByCellType(this.props.cellType, this.props.isStart, this.props.isGoal, this.props.isPath)
     return(
       <td className={`${cell} ${styles.cell}`} onClick={this.handleClick} ></td>
     )
   }
 }
 
-function styleByCellType(cellType, isStart, isGoal) {
+function styleByCellType(cellType, isStart, isGoal, isPath) {
   if(isStart) {
     return(styles.start);
   } else if(isGoal) {
     return(styles.goal);
+  } else if(isPath) {
+    return(styles.path);
   } else {
     return(styles[cellType] || styles.space);
   }
