@@ -2,7 +2,7 @@ module Forms
   class MazeForm
     include Virtus.model
 
-    INITIAL_MAZE = [['space', 'space', 'block'],['block', 'space', 'block']]
+    INITIAL_MAZE = []
     INITIAL_WIDTH = 10
     INITIAL_HEIGHT = 10
 

@@ -37,7 +37,7 @@ class Api::V1::MazeController < ApplicationController
   end
 
   def size
-    size_params[:height] * size_params[:width]
+    size_params[:height].to_i * size_params[:width].to_i
   end
 
   def maze_start
@@ -45,6 +45,6 @@ class Api::V1::MazeController < ApplicationController
   end
 
   def maze_goal
-    [size_params[:height]-1, size_params[:width]-1]
+    [size_params[:height].to_i - 1, size_params[:width].to_i - 1]
   end
 end
