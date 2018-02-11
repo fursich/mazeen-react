@@ -13,7 +13,8 @@ export default class MazeApp extends React.Component {
       height: null,
       maze:   [],
       locked: false,
-      path:   []
+      path:   [],
+      flash:  false
     }
     this.handleWidthChange  = this.handleWidthChange.bind(this)
     this.handleHeightChange = this.handleHeightChange.bind(this)
@@ -50,6 +51,7 @@ export default class MazeApp extends React.Component {
   redraw() {
     this.setState({
       locked: false,
+      flash:  false,
       path: []
     })
     fetchDefaultMaze().then(this.handleFetchInitialMazeSuccess, this.handleFetchInitialMazeFailure)
@@ -74,8 +76,11 @@ export default class MazeApp extends React.Component {
         path: data.maze
       })
     } else {
-      // flushError();
-    }
+      this.setState({
+        locked: true,
+        flash:  true
+      })
+    };
   }
 
   handleSolveMazeFailure(message) {
@@ -115,6 +120,7 @@ export default class MazeApp extends React.Component {
     if (this.state.locked) {
       this.setState( {
         locked: false,
+        flash:  false,
         path:   []
       } )
       event.stopPropagation();
@@ -137,6 +143,7 @@ export default class MazeApp extends React.Component {
           onCellClick={this.handleCellClick}
           onTableClick={this.handleTableClick}
           path={this.state.path}
+          flash={this.state.flash}
         />
         <ButtonPanel
           onSolveButtonClick={this.handleSolveButtonClick}

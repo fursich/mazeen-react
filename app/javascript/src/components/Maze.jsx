@@ -19,8 +19,10 @@ export default class Maze extends React.Component {
   }
 
   render() {
+    const backgroundColor = this.props.flash ? styles.flash : null
+
     return(
-      <table className={styles.table} onClickCapture={this.handleTableClick}>
+      <table className={`${styles.table} ${backgroundColor}`} onClickCapture={this.handleTableClick}>
         <CellTable
           row={this.props.row}
           col={this.props.col}
@@ -29,6 +31,7 @@ export default class Maze extends React.Component {
           goal={[this.props.row-1, this.props.col-1]}
           path={this.props.path}
           onCellClick={this.handleCellClick}
+          flash={this.props.flash}
         />
       </table>
     )
@@ -48,6 +51,7 @@ function CellTable(props) {
         goal={props.goal}
         path={props.path}
         onCellClick={props.onCellClick}
+        flash={props.flash}
         key={i} />
     );
   }
@@ -73,6 +77,7 @@ function CellGroup(props) {
         isStart={props.row === props.start[0] && j === props.start[1]}
         isGoal={props.row === props.goal[0] && j === props.goal[1]}
         isPath={props.path.some(([row, col]) => props.row === row && j === col)}
+        flash={props.flash}
         onCellClick={props.onCellClick} />
     );
   }

@@ -14,9 +14,10 @@ export default class Cell extends React.Component {
   }
 
   render() {
-    const cell = styleByCellType(this.props.cellType, this.props.isStart, this.props.isGoal, this.props.isPath)
+    const cellColor = styleByCellType(this.props.cellType, this.props.isStart, this.props.isGoal, this.props.isPath)
+    const opacity = this.props.flash ? styles.flashedCell : null
     return(
-      <td className={`${cell} ${styles.cell}`} onClick={this.handleClick} ></td>
+      <td className={`${cellColor} ${styles.cell} ${opacity}`} onClick={this.handleClick} ></td>
     )
   }
 }
