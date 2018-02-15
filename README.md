@@ -1,24 +1,17 @@
-# README
+# Mazeen
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### 以前に作成した迷路を動的に解決する簡単なサイトをReactにて再実装
 
-Things you may want to cover:
+https://mazeen2.herokuapp.com/
 
-* Ruby version
+以前のバージョン（jQuery）では迷路の状態管理のために物理DOMを操作していたことがあって、実装がかなり辛かったため、モダンなJSフレームワークを使用してみたらどうなるかという個人的な課題に取り組んでみた。
 
-* System dependencies
+#### サーバサイド
 
-* Configuration
+APIで迷路を解決して打ち返すだけなので、バックエンドが存在する意味が薄いのですが、rails5.2系でwebpackerを試したかったという動機があってこうなりました。
 
-* Database creation
+* 迷路解決アルゴリズムはA-star法を採用
 
-* Database initialization
+* コードの説明、実装意図など、詳しくはこちらを参照
+https://github.com/fursich/mazeen
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
