@@ -73,6 +73,7 @@ group :development do
   gem 'capistrano-rails' # depends on capistrano-bundler / capistrano
   gem 'capistrano-yarn'
   gem 'capistrano-nodenv'
+  gem 'capistrano3-puma'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
