@@ -24,8 +24,6 @@ gem 'jbuilder', '~> 2.5'
 
 gem "slim-rails"
 
-gem "config"
-
 gem 'webpacker', '~>3.5'
 
 gem 'virtus'
